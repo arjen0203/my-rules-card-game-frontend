@@ -3,6 +3,7 @@ import './GlobalStyle.scss';
 import Home from './home/Home';
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 import Login from './login/Login';
+import Register from './register/Register';
 
 class App extends React.Component {
 
@@ -21,7 +22,7 @@ class App extends React.Component {
         </nav>
         <Switch>
           <Route exact path='/login' component={Login}/>
-          <Route exact path='/register' component={Home}/>
+          <Route exact path='/register' component={Register}/>
 
           <Route exact path='/userGames' component={Home}/>
           <Route exact path='/userGames/create' component={Home}/>
