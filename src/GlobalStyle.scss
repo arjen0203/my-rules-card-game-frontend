@@ -1,0 +1,65 @@
+@import './colors';
+
+* {
+    font-family: Arial;
+    color: $jet;
+}
+
+body {
+    padding: 0;
+    margin: 0;
+    background-color: $quicksilver;
+}
+
+.router-list {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: $jetLight;
+    box-shadow: 0px -25px 20px 20px black;
+
+    li {
+        float: left;
+        border-right: 3px solid $jetDark;
+    }
+
+    li a {
+        display: block;
+        color: $quicksilverLight;
+        font-size: 18px;
+        text-align: center;
+        padding: 14px 16px;
+        text-decoration: none;
+        transition: 0.4s;
+    }
+
+    li a:hover {
+        background-color: $jetLightest;
+    }
+
+    .login-button {
+        float: right;
+        border-left: 3px solid $jetDark;
+        border-right: 0px;
+    }
+
+    // .logout-button {
+    //     float: right;
+    //     border-left: 1px solid $gunMetal;
+    //     border-right: 0px;
+    //     display: block;
+    //     color: white;
+    //     font-size: 18px;
+    //     text-align: center;
+    //     padding: 14px 16px;
+    //     text-decoration: none;
+    //     transition: 0.4s;
+    //     cursor: pointer;
+
+    //     &:hover {
+    //         background-color: $blackCoralLight;
+    //     }
+    // }
+}
+
