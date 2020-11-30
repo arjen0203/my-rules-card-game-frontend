@@ -1,0 +1,23 @@
+@import './../colors';
+
+.user-games {
+    justify-content: center;
+    display: flex;
+    margin-top: 20px;
+    margin-left: 1%;
+    margin-right: 1%;
+
+    .game-box, .create-game-box {
+        display: flex;
+        flex-direction: column;
+        padding: 20px;
+        color: $quicksilverLight;
+        background-color: $jetLight;
+        margin: 20px;
+        border-radius: 5px;
+
+        b {
+            color: $quicksilverLight;
+        }
+    }
+}
