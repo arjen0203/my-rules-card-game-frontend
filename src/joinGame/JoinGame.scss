@@ -1,0 +1,67 @@
+@import './../colors';
+
+.center {
+    justify-content: center;
+    display: flex;
+
+    .join-game-box {
+        display: flex;
+        flex-direction: column;
+        background-color: $jetLight;
+        padding: 40px;
+        border-radius: 20px;
+        margin-top: 60px;
+        width: 600px;
+
+        label {
+            color: $quicksilverLight;
+            font-size: 20px;
+            margin-top: 20px;
+            margin-left: 10px;
+            margin-right: 10px;
+            margin-bottom: 2px;
+        }
+
+
+        input {
+            margin-left: 10px;
+            margin-right: 10px;
+            color: $jet;
+            font-size: 20px;
+        }
+        
+        .join-error {
+            color: $vermilionDark;
+            font-size: 20px;
+            text-align: center;
+            margin-top: 12px;
+            margin-bottom: -20px;
+        }
+
+        button {
+            display: inline-block;
+            padding: 5px;
+            background-color: $quicksilver;
+            color: $jetDark;
+            cursor: pointer;
+            text-decoration: none;
+            border: none;
+            transition: 0.4s;
+            border-radius: 5px;
+            width: 70%;
+            margin: auto;
+            margin-top: 50px;
+            font-size: 20px;
+            border: 2px solid $quicksilverLight;
+
+            &:hover {
+                background-color: $quicksilverLight;
+            }
+            &:active {
+                position:relative;
+                top:1px;
+            }
+        }
+        
+    }
+}

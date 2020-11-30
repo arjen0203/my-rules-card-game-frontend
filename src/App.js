@@ -4,6 +4,8 @@ import Home from './home/Home';
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 import Login from './login/Login';
 import Register from './register/Register';
+import UserGames from './userGames/UserGames';
+import JoinGame from './joinGame/JoinGame';
 
 class App extends React.Component {
 
@@ -24,10 +26,10 @@ class App extends React.Component {
           <Route exact path='/login' component={Login}/>
           <Route exact path='/register' component={Register}/>
 
-          <Route exact path='/userGames' component={Home}/>
+          <Route exact path='/userGames' component={UserGames}/>
           <Route exact path='/userGames/create' component={Home}/>
 
-          <Route exact path='/joinGame' component={Home}/>
+          <Route exact path='/joinGame' component={JoinGame}/>
           <Route exact path='/lobby' component={Home}/>
           <Route exact path='/game' component={Home}/>
 
