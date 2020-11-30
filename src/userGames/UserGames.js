@@ -37,9 +37,7 @@ export default class Usergames extends Component {
                 );
         }
         
-        boxes.push(<div className='create-game-box' onClick={this.createNewGame}>+</div>)
-
-        console.log(boxes);
+        boxes.push(<div className='create-game-box' onClick={this.createNewGame}><b>+</b></div>)
 
         return boxes;
     }
