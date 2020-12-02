@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import './RegisterStyle.scss';
+import './Register.scss';
 
 class Register extends Component {
     constructor(props) {

@@ -4,10 +4,10 @@
     justify-content: center;
     display: flex;
 
-    .login-fields {
+    .register-fields {
         display: flex;
         flex-direction: column;
-        background-color: $jetLight;
+        background-color: $jetLightest;
         padding: 20px;
         border-radius: 20px;
         margin-top: 60px;
@@ -18,26 +18,26 @@
             font-size: 18px;
         }
 
-        .login-title {
+        .register-title {
             text-align: center;
             color: $quicksilverLight;
         }
 
-        .login-username-input {
+        .register-username-input {
             margin-top: 3px;
             margin-bottom: 10px;
             color: $jet;
             padding-left: 3px;
         }
 
-        .login-password-input {
+        .register-password-input {
             margin-top: 3px;
             margin-bottom: 10px;
             color: $jet;
             padding-left: 3px;
         }
 
-        .login-error {
+        .register-error {
             color: $vermilionDark;
             font-size: 20px;
             text-align: center;
@@ -45,7 +45,7 @@
             margin-bottom: -8px;
         }
 
-        .login-submit-button {
+        .register-submit-button {
             display: inline-block;
             margin-top: 5px;
             padding: 5px;
@@ -67,7 +67,7 @@
                 top:1px;
             }
         }
-        .to-register-link {
+        .to-login-link {
             text-align: center;
             margin-top: 10px;
             cursor: pointer;
