@@ -6,6 +6,7 @@ import Login from './login/Login';
 import Register from './register/Register';
 import UserGames from './userGames/UserGames';
 import JoinGame from './joinGame/JoinGame';
+import Lobby from './lobby/Lobby';
 
 class App extends React.Component {
 
@@ -30,7 +31,7 @@ class App extends React.Component {
           <Route exact path='/userGames/create' component={Home}/>
 
           <Route exact path='/joinGame' component={JoinGame}/>
-          <Route exact path='/lobby' component={Home}/>
+          <Route exact path='/lobby' component={Lobby}/>
           <Route exact path='/game' component={Home}/>
 
           <Route exact path='/home' component={Home}/>

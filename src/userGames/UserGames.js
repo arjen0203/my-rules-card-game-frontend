@@ -32,12 +32,12 @@ export default class Usergames extends Component {
             boxes.push(
                 <div key={'gb' + i} className='game-box'>
                     <b className='game-name'>{this.state.games[i].name}</b>
-                    <button className='remove-button' onClick={(id) => this.removeGame(this.state.games[i].id)}>Remove</button>
+                    <button className='remove-button' onClick={() => this.removeGame(this.state.games[i].id)}>Remove</button>
                 </div>
                 );
         }
         
-        boxes.push(<div className='create-game-box' onClick={this.createNewGame}><b>+</b></div>)
+        boxes.push(<div key='crBox' className='create-game-box' onClick={this.createNewGame}><b>+</b></div>)
 
         return boxes;
     }
