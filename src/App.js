@@ -1,12 +1,12 @@
 import React from 'react';
 import './GlobalStyle.scss';
-import Home from './home/Home';
+import Home from './pages/home/Home';
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
-import Login from './login/Login';
-import Register from './register/Register';
-import UserGames from './userGames/UserGames';
-import JoinGame from './joinGame/JoinGame';
-import Lobby from './lobby/Lobby';
+import Login from './pages/login/Login';
+import Register from './pages/register/Register';
+import UserGames from './pages/userGames/UserGames';
+import JoinGame from './pages/joinGame/JoinGame';
+import Lobby from './pages/lobby/Lobby';
 
 class App extends React.Component {
 

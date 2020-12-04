@@ -16,6 +16,13 @@ export default class Joingame extends Component {
         this.joinLobby = this.joinLobby.bind(this);
     }
 
+    componentDidMount() {
+        const params = new URL(window.location).searchParams;
+        let code = params.get('code');
+        
+        this.setState({code});
+    }
+
     joinLobby(){
         var data = {playerName: this.state.name, code: this.state.code};
 

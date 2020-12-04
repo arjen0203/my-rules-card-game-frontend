@@ -21,7 +21,8 @@ export default class Lobby extends Component {
     }
 
     quickLInkToClipboard() {
-        navigator.clipboard.writeText('https://kom-potje.xyz/joinGame?code="' + this.state.code + '"');
+        //navigator.clipboard.writeText('https://kom-potje.xyz/joinGame?code=' + this.state.code);
+        navigator.clipboard.writeText('http://localhost:3000/joinGame?code=' + this.state.code);
     }
 
     kickPlayer(id) {
