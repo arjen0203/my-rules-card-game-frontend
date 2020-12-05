@@ -7,6 +7,7 @@ import Register from './pages/register/Register';
 import UserGames from './pages/userGames/UserGames';
 import JoinGame from './pages/joinGame/JoinGame';
 import Lobby from './pages/lobby/Lobby';
+import Game from './pages/game/Game';
 
 class App extends React.Component {
 
@@ -32,7 +33,7 @@ class App extends React.Component {
 
           <Route exact path='/joinGame' component={JoinGame}/>
           <Route exact path='/lobby' component={Lobby}/>
-          <Route exact path='/game' component={Home}/>
+          <Route exact path='/game' component={Game}/>
 
           <Route exact path='/home' component={Home}/>
           <Route path='/' component={Home}/>
