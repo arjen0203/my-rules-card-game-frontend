@@ -63,4 +63,28 @@ const cardLookupTable = [[<ReactClubs1/>, <ReactClubs2/>, <ReactClubs3/>, <React
                         [<ReactDiamonds1/>, <ReactDiamonds2/>, <ReactDiamonds3/>, <ReactDiamonds4/>, <ReactDiamonds5/>, <ReactDiamonds6/>, <ReactDiamonds7/>, <ReactDiamonds8/>, <ReactDiamonds9/>, <ReactDiamonds10/>, <ReactDiamondsJack/>, <ReactDiamondsQueen/>, <ReactDiamondsKing/>],
                         [<ReactJoker1/>, <ReactJoker2/>]];
 
-export { cardLookupTable };
+const suitEnum = {
+    CLUBS: 0,
+    HEARTHS: 1,
+    SPADES: 2,
+    DIAMONDS: 3,
+    JOKER: 4
+}
+
+const cardValueEnum = {
+    ACE: 0,
+    TWO: 1,
+    THREE: 2,
+    FOUR: 3,
+    FIVE: 4,
+    SIX: 5,
+    SEVEN: 6,
+    EIGHT: 7,
+    NINE: 8,
+    TEN: 9,
+    JACK: 10,
+    QUEEN: 11,
+    KING: 12
+}
+
+export { cardLookupTable, suitEnum, cardValueEnum };

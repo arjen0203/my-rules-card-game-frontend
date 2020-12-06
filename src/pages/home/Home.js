@@ -8,6 +8,7 @@ export default class Home extends Component {
                 <b className='home-title'>Welcome to kom-potje.xyz</b>
                 <div className='home-text'>On this website you can join card games and</div>
                 <div className='home-text'>If you own an account you can also create your own card games and host them!</div>
+                <div className='home-text'>DISCLAIMER: this website currently does not support mobile devices</div>
             </div>
         )
     }
