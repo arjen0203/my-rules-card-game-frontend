@@ -8,8 +8,16 @@ export default class Game extends Component {
 
         this.state = {
             currentCard: {suit: suitEnum.SPADES, value: cardValueEnum.TWO},
-            messages: []
+            messages: [],
+            sendMessage: ''
         }
+
+        this.handleMessageChange = this.handleMessageChange.bind(this);
+        this.sendMessage = this.sendMessage.bind(this);
+    }
+
+    handleMessageChange(event) {
+        this.setState({sendMessage: event.target.value});
     }
 
     renderCurrentCard() {
@@ -27,20 +35,35 @@ export default class Game extends Component {
         return messages;
     }
 
+    renderTurnOrder() {
+
+    }
+
+    sendMessage() {
+         var messages = this.state.messages.slice();
+         messages.push({isServerMessage: false, message: '[Rens] ' + this.state.sendMessage});
+
+         var messageBody = document.querySelector('.messages');
+         this.setState({messages}, () => (messageBody.scrollTop = messageBody.scrollHeight - messageBody.clientHeight));
+    }
+
     pushTestServerMessage() {
         var messages = this.state.messages.slice();
 
-        messages.push({isServerMessage: true, message: 'THIS IS THE BIGGG serve message test'});
+        messages.push({isServerMessage: true, message: '[SERVER] THIS IS THE BIGGG serve message test'});
 
-        this.setState({messages});
+        var messageBody = document.querySelector('.messages');
+        
+        this.setState({messages}, () => (messageBody.scrollTop = messageBody.scrollHeight - messageBody.clientHeight));
     }
 
     pushTestMessage() {
         var messages = this.state.messages.slice();
 
-        messages.push({isServerMessage: false, message: 'THIS IS THE BIGGG serve message test'});
+        messages.push({isServerMessage: false, message: '[Rens] normal message test'});
 
-        this.setState({messages});
+        var messageBody = document.querySelector('.messages');
+        this.setState({messages}, () => (messageBody.scrollTop = messageBody.scrollHeight - messageBody.clientHeight));
     }
 
     render() {
@@ -53,11 +76,11 @@ export default class Game extends Component {
                 <div className='chat'>
                     <div className='messages'>{this.renderMessages()}</div>
                     <div className='send-messages'>
-                        <input className='message-input'></input>
-                        <button onClick={() => this.pushTestMessage()}>Send</button>
+                        <input value={this.state.sendMessage} onChange={this.handleMessageChange} className='message-input'></input>
+                        <button onClick={this.sendMessage}>Send</button>
                     </div>
                 </div>
-                <div className='turn order'></div>
+                <div className='turn-order'>{this.renderTurnOrder()}</div>
                 <div className='card-select-box'></div>
             </div>
         )
