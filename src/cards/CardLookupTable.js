@@ -84,7 +84,9 @@ const cardValueEnum = {
     TEN: 9,
     JACK: 10,
     QUEEN: 11,
-    KING: 12
+    KING: 12,
+    JOKER1: 0,
+    JOKER2: 1
 }
 
 export { cardLookupTable, suitEnum, cardValueEnum };
