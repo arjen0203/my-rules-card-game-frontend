@@ -46,12 +46,12 @@ export default class Game extends Component {
 
         for (let i = 0; i < this.state.players.length; i++) {
             if (this.state.players[i].isTurn) playerDivs.push(
-                <div className='current-player-div'>
+                <div key={'cpt' + i} className='current-player-div'>
                     <div className='player-name'>{this.state.players[i].name}</div>
                     <div className='player-cards'>Cards left: {this.state.players[i].cards}</div>
                 </div>);
             else playerDivs.push(
-                <div className='player-div'>
+                <div key={'pt' + i} className='player-div'>
                     <div className='player-name'>{this.state.players[i].name}</div>
                     <div className='player-cards'>Cards left: {this.state.players[i].cards}</div>
                 </div>);
@@ -64,8 +64,8 @@ export default class Game extends Component {
         var cardDivs = [];
 
         for (let i = 0; i < this.state.cards.length; i++) {
-            if (this.state.cards[i].isSelected) cardDivs.push(<div className='selected-card-div'>{cardLookupTable[this.state.cards[i].suit][this.state.cards[i].value]}</div>);
-            else cardDivs.push(<div className='card-div' onClick={() => this.clickCard(i)}>{cardLookupTable[this.state.cards[i].suit][this.state.cards[i].value]}</div>);
+            if (this.state.cards[i].isSelected) cardDivs.push(<div key={'scrd' + i} className='selected-card-div'>{cardLookupTable[this.state.cards[i].suit][this.state.cards[i].value]}</div>);
+            else cardDivs.push(<div key={'crd' + i} className='card-div' onClick={() => this.clickCard(i)}>{cardLookupTable[this.state.cards[i].suit][this.state.cards[i].value]}</div>);
         }
 
         return cardDivs;
