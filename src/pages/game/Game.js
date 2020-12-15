@@ -14,7 +14,7 @@ export default class Game extends Component {
             isTurn: true,
             cards: [{suit: suitEnum.SPADES, value: cardValueEnum.FOUR, isSelected: false}, {suit: suitEnum.HEARTHS, value: cardValueEnum.TWO, isSelected: false},
                 {suit: suitEnum.DIAMONDS, value: cardValueEnum.TEN, isSelected: false}, {suit: suitEnum.HEARTHS, value: cardValueEnum.QUEEN, isSelected: false},
-                {suit: suitEnum.JOKER, value: cardValueEnum.JOKER1, isSelected: false}, {suit: suitEnum.CLUBS, value: cardValueEnum.JACK, isSelected: false},],
+                {suit: suitEnum.JOKER, value: cardValueEnum.JOKER1, isSelected: false}, {suit: suitEnum.CLUBS, value: cardValueEnum.JACK, isSelected: false}],
             selectedIndex: null
         }
 

@@ -18,7 +18,11 @@ export default class Usergames extends Component {
 
     removeGame(id) {
         //todo add remove function
-        console.log('removed card game id: ' + id + 'in the future')
+        console.log('removed card game id: ' + id + ' in the future')
+    }
+
+    hostGame(id) {
+        console.log('hosted a game for ' + id + ' in the future');
     }
 
     createNewGame() {
@@ -32,6 +36,7 @@ export default class Usergames extends Component {
             boxes.push(
                 <div key={'gb' + i} className='game-box'>
                     <b className='game-name'>{this.state.games[i].name}</b>
+                    <button className='remove-button' onClick={() => this.hostGame(this.state.games[i].id)}>Host</button>
                     <button className='remove-button' onClick={() => this.removeGame(this.state.games[i].id)}>Remove</button>
                 </div>
                 );

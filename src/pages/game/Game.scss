@@ -227,6 +227,9 @@
             width: 100%;
             flex-wrap: wrap;
             justify-content: center;
+            overflow-x: hidden;
+            overflow-y: auto;
+            max-height: 250px;
 
             .selected-card-div, .card-div {
                 padding: 10px;
