@@ -5,9 +5,15 @@ export default class Usergames extends Component {
     constructor(props) {
         super(props);
 
-        this.state = {games: []}
+        this.state = {
+            games: [], 
+            hostGameId: null,
+            screenName: ''
+        }
 
         this.createNewGame = this.createNewGame.bind(this);
+        this.handleNameChange = this.handleNameChange.bind(this);
+        this.closeWindow = this.closeWindow.bind(this);
     }
 
     componentDidMount() {
@@ -21,8 +27,8 @@ export default class Usergames extends Component {
         console.log('removed card game id: ' + id + ' in the future')
     }
 
-    hostGame(id) {
-        console.log('hosted a game for ' + id + ' in the future');
+    setHostGameId(id) {
+        this.setState({hostGameId: id});
     }
 
     createNewGame() {
@@ -47,10 +53,23 @@ export default class Usergames extends Component {
         return boxes;
     }
 
+    handleNameChange(event){
+        this.setState({screenName: event.target.value});
+    }
+
+    hostGame(){
+        //todo start sockets and stuff
+    }
+
+    closeWindow(event) {
+        if (event.target.className === 'click-lock-div') this.setState({hostGameId: null})
+    }
+
     render() {
         return (
             <div className='user-games'>
                 {this.createGameBoxesAndButton()}
+                {(this.state.hostGameId !== null) ? <div className='click-lock-div' onClick={this.closeWindow}><div className='host-input-div' onClick={null}><b className='screen-name-title'>Fill in your screen name and click host:</b><input className="screen-name-input" type="text" placeholder="Screen name" value={this.state.screenName} onChange={this.handleNameChange}></input><button>Host</button></div></div> : <div></div>}
             </div>
         )
     }

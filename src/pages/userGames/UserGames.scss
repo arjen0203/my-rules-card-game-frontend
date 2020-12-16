@@ -60,4 +60,66 @@
             margin-bottom: 0px;
         }
     }
+
+    .click-lock-div {
+        height: 100vh;
+        width: 100vw;
+        position: fixed;
+        top: 0px;
+        background-color: rgba(0, 0, 0, 0.39);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+
+        .host-input-div {
+            background-color: $jet;
+            border-radius: 20px;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+
+            .screen-name-title {
+                color: $quicksilverLight;
+                font-size: 25px;
+                margin-top: 20px;
+                margin-left: 10px;
+                margin-right: 10px;
+                margin-bottom: 2px;
+            }
+
+            .screen-name-input {
+                margin-left: 10px;
+                margin-right: 10px;
+                color: $jet;
+                font-size: 20px;
+                margin-top: 10px;
+            }
+
+            button {
+                display: inline-block;
+                padding: 5px;
+                background-color: $quicksilver;
+                color: $jetDark;
+                cursor: pointer;
+                text-decoration: none;
+                border: none;
+                transition: 0.4s;
+                border-radius: 5px;
+                width: 100px;
+                margin-top: 10px;
+                font-size: 20px;
+                border: 2px solid $quicksilverLight;
+    
+                &:hover {
+                    background-color: $quicksilverLight;
+                }
+                &:active {
+                    position:relative;
+                    top:1px;
+                }
+            }
+        }
+    }
 }
