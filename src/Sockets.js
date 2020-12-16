@@ -6,7 +6,9 @@ class Socket {
 	}
 
 	init() {
-		this.socket = io('ws//localhost:6003', { path:'/sockets' });
+		this.socket = io('http://localhost:5002', { path:'/sockets' });
+		
+		this.socket.on('error', (data) => console.log(data))
 	}
 
 	on(path, callback) {
@@ -16,6 +18,8 @@ class Socket {
 	emit(path, data) {
 		this.socket.emit(path, data);
 	}
+
+	
 }
 
 const socket = new Socket();

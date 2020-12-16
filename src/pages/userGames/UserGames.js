@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import './UserGames.scss'
+import Socket from './../../Sockets.js';
 
 export default class Usergames extends Component {
     constructor(props) {
@@ -42,7 +43,7 @@ export default class Usergames extends Component {
             boxes.push(
                 <div key={'gb' + i} className='game-box'>
                     <b className='game-name'>{this.state.games[i].name}</b>
-                    <button className='remove-button' onClick={() => this.hostGame(this.state.games[i].id)}>Host</button>
+                    <button className='remove-button' onClick={() => this.setHostGameId(this.state.games[i].id)}>Host</button>
                     <button className='remove-button' onClick={() => this.removeGame(this.state.games[i].id)}>Remove</button>
                 </div>
                 );
@@ -58,7 +59,11 @@ export default class Usergames extends Component {
     }
 
     hostGame(){
-        //todo start sockets and stuff
+        Socket.on('hostSucces', () => {
+            this.props.history.push("/lobby");
+        });
+
+        Socket.emit('hostGame', {gameId: 69, hostName: 'rens'})
     }
 
     closeWindow(event) {
@@ -69,7 +74,7 @@ export default class Usergames extends Component {
         return (
             <div className='user-games'>
                 {this.createGameBoxesAndButton()}
-                {(this.state.hostGameId !== null) ? <div className='click-lock-div' onClick={this.closeWindow}><div className='host-input-div' onClick={null}><b className='screen-name-title'>Fill in your screen name and click host:</b><input className="screen-name-input" type="text" placeholder="Screen name" value={this.state.screenName} onChange={this.handleNameChange}></input><button>Host</button></div></div> : <div></div>}
+                {(this.state.hostGameId !== null) ? <div className='click-lock-div' onClick={this.closeWindow}><div className='host-input-div' onClick={null}><b className='screen-name-title'>Fill in your screen name and click host:</b><input className="screen-name-input" type="text" placeholder="Screen name" value={this.state.screenName} onChange={this.handleNameChange}></input><button onClick={this.hostGame}>Host</button></div></div> : <div></div>}
             </div>
         )
     }
