@@ -19,6 +19,9 @@ class Socket {
 		this.socket.emit(path, data);
 	}
 
+	off(path) {
+		this.socket.removeAllListeners(path);
+	}
 	
 }
 

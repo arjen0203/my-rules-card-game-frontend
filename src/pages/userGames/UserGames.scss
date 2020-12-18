@@ -97,6 +97,13 @@
                 margin-top: 10px;
             }
 
+            .hosting-error {
+                color: $vermilionDark;
+                font-size: 20px;
+                text-align: center;
+                margin-top: 10px;
+            }
+
             button {
                 display: inline-block;
                 padding: 5px;
@@ -115,6 +122,7 @@
                 &:hover {
                     background-color: $quicksilverLight;
                 }
+
                 &:active {
                     position:relative;
                     top:1px;

@@ -1,4 +1,6 @@
 import React, { Component } from 'react'
+import socket from '../../Sockets';
+import Socket from '../../Sockets';
 import './Lobby.scss'
 
 export default class Lobby extends Component {
@@ -7,7 +9,8 @@ export default class Lobby extends Component {
 
         this.state = {
                  players: [],
-                 code: 'AB123'
+                 code: '',
+                 isHost: false
         }
 
         this.quickLInkToClipboard = this.quickLInkToClipboard.bind(this);
@@ -15,9 +18,19 @@ export default class Lobby extends Component {
     }
 
     componentDidMount() {
-        var players = [{id: 1, name: 'rens'}, {id: 4, name: 'freek'}, {id: 4, name: 'sjaak'}]
+        Socket.on('lobbyData', (data) => {
+            this.setState({players: data.players, code: data.code, isHost: data.isHost});
+        });
 
-        this.setState({players});
+        socket.on('lobbyEnded', () => {
+            this.props.history.push('/');
+        });
+
+        Socket.emit('getLobby');
+    }
+
+    componentWillUnmount() {
+        Socket.off('lobbyData');
     }
 
     quickLInkToClipboard() {
@@ -47,7 +60,8 @@ export default class Lobby extends Component {
         var playerDivs = [];
         
         for (let i = 0; i < this.state.players.length; i++) {
-        playerDivs.push(<div key={'LP' + i} className='player-box' onClick={() => this.kickPlayer(i)}>{this.state.players[i].name}</div>);
+            if (this.state.isHost) playerDivs.push(<div key={'LP' + i} className='player-box-host' onClick={() => this.kickPlayer(i)}>{this.state.players[i].name}</div>);
+            else playerDivs.push(<div key={'LP' + i} className='player-box'>{this.state.players[i].name}</div>)
         }
 
         return playerDivs;
@@ -68,8 +82,8 @@ export default class Lobby extends Component {
                     <div className='players-container'>
                         {this.renderPlayers()}
                     </div>
-                    {this.state.players.length < 12 ? <button className='add-bot-button' onClick={this.addBot}>Add bot</button> : <div></div> }
-                    <div className='kick-text'>Click on a player or bot to kick them</div>
+                    {/* {this.state.players.length < 12 && this.state.isHost ? <button className='add-bot-button' onClick={this.addBot}>Add bot</button> : <div></div> } */}
+                    {this.state.isHost ? <div className='kick-text'>Click on a player or bot to kick them</div> : <div></div> }
                 </div>
             </div>
         )

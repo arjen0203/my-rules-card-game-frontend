@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import './UserGames.scss'
 import Socket from './../../Sockets.js';
+import autobind from 'class-autobind';
 
 export default class Usergames extends Component {
     constructor(props) {
@@ -9,18 +10,25 @@ export default class Usergames extends Component {
         this.state = {
             games: [], 
             hostGameId: null,
-            screenName: ''
+            screenName: '',
+            errorMessage: ''
         }
 
-        this.createNewGame = this.createNewGame.bind(this);
-        this.handleNameChange = this.handleNameChange.bind(this);
-        this.closeWindow = this.closeWindow.bind(this);
+        autobind(this);
     }
 
     componentDidMount() {
         var games = [{id: 2, name: 'CardGame 1'}, {id: 5, name: 'CardGame 2'}, {id: 9, name: 'CardGame 3'}]
 
         this.setState({games});
+
+        Socket.on('hostSucces', () => {
+            this.props.history.push('/lobby');
+        });
+    }
+
+    componentWillUnmount() {
+        Socket.off('hostSucces');
     }
 
     removeGame(id) {
@@ -59,11 +67,17 @@ export default class Usergames extends Component {
     }
 
     hostGame(){
-        Socket.on('hostSucces', () => {
-            this.props.history.push("/lobby");
-        });
+        if (this.state.screenName.length < 3) {
+            this.setState({errorMessage: 'Name must contain atleast 3 charachters'});
+            return;
+        }
 
-        Socket.emit('hostGame', {gameId: 69, hostName: 'rens'})
+        if (this.state.screenName.length > 20) {
+            this.setState({errorMessage: 'Name can\'t contain more then 20 charachters'});
+            return;
+        }
+
+        Socket.emit('hostGame', {gameId: 69, hostName: this.state.screenName})
     }
 
     closeWindow(event) {
@@ -74,7 +88,17 @@ export default class Usergames extends Component {
         return (
             <div className='user-games'>
                 {this.createGameBoxesAndButton()}
-                {(this.state.hostGameId !== null) ? <div className='click-lock-div' onClick={this.closeWindow}><div className='host-input-div' onClick={null}><b className='screen-name-title'>Fill in your screen name and click host:</b><input className="screen-name-input" type="text" placeholder="Screen name" value={this.state.screenName} onChange={this.handleNameChange}></input><button onClick={this.hostGame}>Host</button></div></div> : <div></div>}
+                {(this.state.hostGameId !== null) ? 
+                <div className='click-lock-div' onClick={this.closeWindow}>
+                    <div className='host-input-div' onClick={null}>
+                        <b className='screen-name-title'>Fill in your screen name and click host:</b>
+                        <input className="screen-name-input" type="text" placeholder="Screen name" value={this.state.screenName} onChange={this.handleNameChange}></input>
+                        <div className='hosting-error'>{this.state.errorMessage}</div>
+                        <button onClick={this.hostGame}>Host</button>
+                    </div>
+                </div> : 
+                <div></div>
+                }
             </div>
         )
     }

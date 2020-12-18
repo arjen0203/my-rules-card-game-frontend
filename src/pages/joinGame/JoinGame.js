@@ -1,4 +1,6 @@
+import autobind from 'class-autobind';
 import React, { Component } from 'react'
+import Socket from './../../Sockets.js';
 import './JoinGame.scss';
 
 export default class Joingame extends Component {
@@ -11,24 +13,46 @@ export default class Joingame extends Component {
                  errorMessage: ''
         }
 
-        this.handleNameChange = this.handleNameChange.bind(this);
-        this.handleCodeChange = this.handleCodeChange.bind(this);
-        this.joinLobby = this.joinLobby.bind(this);
+        autobind(this);
     }
 
     componentDidMount() {
         const params = new URL(window.location).searchParams;
         let code = params.get('code');
         
+        if (!code) code = '';
+
         this.setState({code});
+
+        Socket.on('lobbyJoined', () => {
+            this.props.history.push('/lobby');
+        })
+
+        Socket.on('joinFailed', (data) => {
+            this.setState({errorMessage: data.message})
+        })
+    }
+
+    componentWillUnmount() {
+        Socket.off('lobbyJoined');
+
+        Socket.off('joinFailed');
     }
 
     joinLobby(){
-        var data = {playerName: this.state.name, code: this.state.code};
+        if (this.state.name.length < 3) {
+            this.setState({errorMessage: 'name must be atleast 3 charachters long'})
+            return;
+        }
 
-        console.log(data);
+        if (this.state.name.length > 20) {
+            this.setState({errorMessage: 'name can\'t be longer than 20 charachters'})
+            return;
+        }
 
-        this.setState({errorMessage: 'feature not implemented yet'});
+        var data = {screenName: this.state.name, code: this.state.code};
+
+        Socket.emit('joinLobby', data)
     }
 
     handleNameChange(event) {
@@ -36,7 +60,7 @@ export default class Joingame extends Component {
     }
 
     handleCodeChange(event) {
-        this.setState({code: event.target.value});
+        this.setState({code: event.target.value.toUpperCase()});
     }
 
     render() {

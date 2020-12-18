@@ -60,7 +60,7 @@
             justify-content: space-evenly;
             flex-wrap: wrap;
 
-            .player-box {
+            .player-box, .player-box-host {
                 padding: 5px;
                 margin: 20px;
                 background-color: $quicksilver;
@@ -69,12 +69,15 @@
                 font-size: 30px;
                 transition: 0.4s;
                 border: 5px solid $quicksilver;
-
-                &:hover {
-                    border: 5px solid $vermilionDark;
-                }
             }
 
+            .player-box-host {
+                cursor: pointer;
+            }
+
+            .player-box-host:hover {
+                border: 5px solid $vermilionDark;
+            }
         }
 
         .player-amount {
