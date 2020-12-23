@@ -24,6 +24,11 @@ export default class Lobby extends Component {
 
         socket.on('lobbyEnded', () => {
             this.props.history.push('/');
+            console.log('yes?');
+        });
+
+        socket.on('kicked', () => {
+            this.props.history.push('/');
         });
 
         Socket.emit('getLobby');
@@ -31,6 +36,8 @@ export default class Lobby extends Component {
 
     componentWillUnmount() {
         Socket.off('lobbyData');
+        Socket.off('lobbyEnded');
+        Socket.off('kicked');
     }
 
     quickLInkToClipboard() {
@@ -39,11 +46,7 @@ export default class Lobby extends Component {
     }
 
     kickPlayer(id) {
-        //change to kicking socket
-        var players = this.state.players.slice();
-        players.splice(id, 1);
-
-        this.setState({players});
+        Socket.emit('kickPlayer', {uuid: id});
     }
 
     addBot() {
@@ -60,7 +63,7 @@ export default class Lobby extends Component {
         var playerDivs = [];
         
         for (let i = 0; i < this.state.players.length; i++) {
-            if (this.state.isHost) playerDivs.push(<div key={'LP' + i} className='player-box-host' onClick={() => this.kickPlayer(i)}>{this.state.players[i].name}</div>);
+            if (this.state.isHost) playerDivs.push(<div key={'LP' + i} className='player-box-host' onClick={() => this.kickPlayer(this.state.players[i].uuid)}>{this.state.players[i].name}</div>);
             else playerDivs.push(<div key={'LP' + i} className='player-box'>{this.state.players[i].name}</div>)
         }
 
