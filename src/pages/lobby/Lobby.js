@@ -87,6 +87,7 @@ export default class Lobby extends Component {
                     </div>
                     {/* {this.state.players.length < 12 && this.state.isHost ? <button className='add-bot-button' onClick={this.addBot}>Add bot</button> : <div></div> } */}
                     {this.state.isHost ? <div className='kick-text'>Click on a player or bot to kick them</div> : <div></div> }
+                    {this.state.isHost && this.state.players.length > 1 ? <button className='start-button'>Start</button> : <div></div>}
                 </div>
             </div>
         )

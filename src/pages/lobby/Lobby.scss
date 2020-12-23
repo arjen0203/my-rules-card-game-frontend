@@ -93,6 +93,33 @@
             font-size: 18px;
         }
 
+        .start-button {
+            display: inline-block;
+            padding: 5px;
+            background-color: $quicksilverLight;
+            color: $jetDark;
+            font-weight: bold;
+            cursor: pointer;
+            text-decoration: none;
+            border: none;
+            transition: 0.4s;
+            border-radius: 5px;
+            width: 100px;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            font-size: 30px;
+            border: 4px solid $quicksilver;
+
+            &:hover {
+                background-color: $quicksilver;
+            }
+
+            &:active {
+                position:relative;
+                top:1px;
+            }
+        }
+
         button {
             display: inline-block;
             padding: 5px;
