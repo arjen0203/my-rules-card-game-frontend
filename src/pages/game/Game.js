@@ -1,6 +1,8 @@
-import React, { Component } from 'react'
-import { cardLookupTable, cardValueEnum, suitEnum } from './../../cards/CardLookupTable.js'
-import './Game.scss'
+import React, { Component } from 'react';
+import { cardLookupTable, cardValueEnum, suitEnum } from './../../cards/CardLookupTable.js';
+import './Game.scss';
+import autobind from 'class-autobind';
+import Socket from '../../Sockets';
 
 export default class Game extends Component {
     constructor(props) {
@@ -10,7 +12,7 @@ export default class Game extends Component {
             currentCard: {suit: suitEnum.SPADES, value: cardValueEnum.TWO},
             messages: [],
             sendMessage: '',
-            players: [{name: 'Rens', cards: 12, isTurn: true}, {name: 'Freek', cards: 8, isTurn: false}, {name: 'Sjaakie van de chocofabriek', cards: 8, isTurn: false}],
+            players: [{name: 'Rens', cardAmount: 12, isTurn: true}, {name: 'Freek', cardAmount: 8, isTurn: false}, {name: 'Sjaakie van de chocofabriek', cardAmount: 8, isTurn: false}],
             isTurn: true,
             cards: [{suit: suitEnum.SPADES, value: cardValueEnum.FOUR, isSelected: false}, {suit: suitEnum.HEARTHS, value: cardValueEnum.TWO, isSelected: false},
                 {suit: suitEnum.DIAMONDS, value: cardValueEnum.TEN, isSelected: false}, {suit: suitEnum.HEARTHS, value: cardValueEnum.QUEEN, isSelected: false},
@@ -18,8 +20,20 @@ export default class Game extends Component {
             selectedIndex: null
         }
 
-        this.handleMessageChange = this.handleMessageChange.bind(this);
-        this.sendMessage = this.sendMessage.bind(this);
+        autobind(this);
+    }
+
+    componentDidMount() {
+        Socket.on('gameState', (data) => {
+            console.log(data);
+            this.setState({cards: data.cards, isTurn: data.isTurn, players: data.players, currentCard: data.currentCard});
+        });
+
+        Socket.emit('getGameState');
+    }
+
+    componentWillUnmount() {
+        Socket.off('gameState');
     }
 
     handleMessageChange(event) {
@@ -48,12 +62,12 @@ export default class Game extends Component {
             if (this.state.players[i].isTurn) playerDivs.push(
                 <div key={'cpt' + i} className='current-player-div'>
                     <div className='player-name'>{this.state.players[i].name}</div>
-                    <div className='player-cards'>Cards left: {this.state.players[i].cards}</div>
+                    <div className='player-cards'>Cards left: {this.state.players[i].cardAmount}</div>
                 </div>);
             else playerDivs.push(
                 <div key={'pt' + i} className='player-div'>
                     <div className='player-name'>{this.state.players[i].name}</div>
-                    <div className='player-cards'>Cards left: {this.state.players[i].cards}</div>
+                    <div className='player-cards'>Cards left: {this.state.players[i].cardAmount}</div>
                 </div>);
         }
 

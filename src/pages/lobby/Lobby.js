@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
-import socket from '../../Sockets';
 import Socket from '../../Sockets';
-import './Lobby.scss'
+import './Lobby.scss';
+import autobind from 'class-autobind';
 
 export default class Lobby extends Component {
     constructor(props) {
@@ -13,8 +13,7 @@ export default class Lobby extends Component {
                  isHost: false
         }
 
-        this.quickLInkToClipboard = this.quickLInkToClipboard.bind(this);
-        this.addBot = this.addBot.bind(this);
+        autobind(this);
     }
 
     componentDidMount() {
@@ -22,14 +21,18 @@ export default class Lobby extends Component {
             this.setState({players: data.players, code: data.code, isHost: data.isHost});
         });
 
-        socket.on('lobbyEnded', () => {
+        Socket.on('lobbyEnded', () => {
             this.props.history.push('/');
             console.log('yes?');
         });
 
-        socket.on('kicked', () => {
+        Socket.on('kicked', () => {
             this.props.history.push('/');
         });
+
+        Socket.on('gameStarted', () => {
+            this.props.history.push('/game');
+        })
 
         Socket.emit('getLobby');
     }
@@ -38,6 +41,7 @@ export default class Lobby extends Component {
         Socket.off('lobbyData');
         Socket.off('lobbyEnded');
         Socket.off('kicked');
+        Socket.off('gameStarted');
     }
 
     quickLInkToClipboard() {
@@ -57,6 +61,10 @@ export default class Lobby extends Component {
         players.push({id: 69, name: 'BOT'})
 
         this.setState({players});
+    }
+
+    startGame() {
+        Socket.emit('startGame');
     }
 
     renderPlayers() {
@@ -87,7 +95,7 @@ export default class Lobby extends Component {
                     </div>
                     {/* {this.state.players.length < 12 && this.state.isHost ? <button className='add-bot-button' onClick={this.addBot}>Add bot</button> : <div></div> } */}
                     {this.state.isHost ? <div className='kick-text'>Click on a player or bot to kick them</div> : <div></div> }
-                    {this.state.isHost && this.state.players.length > 1 ? <button className='start-button'>Start</button> : <div></div>}
+                    {this.state.isHost && this.state.players.length > 1 ? <button className='start-button' onClick={this.startGame}>Start</button> : <div></div>}
                 </div>
             </div>
         )
