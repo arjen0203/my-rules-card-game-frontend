@@ -231,23 +231,39 @@
             overflow-y: auto;
             max-height: 250px;
 
-            .selected-card-div, .card-div {
-                padding: 10px;
-                border-radius: 20px;
-                margin: 10px;
-                display: flex;
-                align-items: center;
-                cursor: pointer;
+            div {
+                position: relative;
 
-                svg {
-                    width: 150px;
-                    height: 100%;
+                .selected-card-div, .card-div {
+                    padding: 10px;
+                    border-radius: 20px;
+                    margin: 10px;
+                    display: flex;
+                    align-items: center;
+                    cursor: pointer;
+    
+                    svg {
+                        width: 150px;
+                        height: 100%;
+                    }
+                }
+    
+                .selected-card-div {
+                    background-color: $jetDark;
+                }
+
+                .greyed-card {
+                    position: absolute;
+                    top: 10px;
+                    left: 10px;
+                    width: 170px;
+                    height: 230px;
+                    background-color: rgba(0, 0, 0, 0.37);
+                    border-radius: 10px;
                 }
             }
 
-            .selected-card-div {
-                background-color: $jetDark;
-            }
         }
     }
+
 }

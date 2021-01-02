@@ -12,12 +12,11 @@ export default class Game extends Component {
             currentCard: {suit: suitEnum.SPADES, value: cardValueEnum.TWO},
             messages: [],
             sendMessage: '',
-            players: [{name: 'Rens', cardAmount: 12, isTurn: true}, {name: 'Freek', cardAmount: 8, isTurn: false}, {name: 'Sjaakie van de chocofabriek', cardAmount: 8, isTurn: false}],
+            players: [],
             isTurn: true,
-            cards: [{suit: suitEnum.SPADES, value: cardValueEnum.FOUR, isSelected: false}, {suit: suitEnum.HEARTHS, value: cardValueEnum.TWO, isSelected: false},
-                {suit: suitEnum.DIAMONDS, value: cardValueEnum.TEN, isSelected: false}, {suit: suitEnum.HEARTHS, value: cardValueEnum.QUEEN, isSelected: false},
-                {suit: suitEnum.JOKER, value: cardValueEnum.JOKER1, isSelected: false}, {suit: suitEnum.CLUBS, value: cardValueEnum.JACK, isSelected: false}],
-            selectedIndex: null
+            cards: [],
+            selectedIndex: null,
+            pickCard: false
         }
 
         autobind(this);
@@ -25,8 +24,14 @@ export default class Game extends Component {
 
     componentDidMount() {
         Socket.on('gameState', (data) => {
-            console.log(data);
-            this.setState({cards: data.cards, isTurn: data.isTurn, players: data.players, currentCard: data.currentCard});
+            var cards = this.getFilteredCards(data.cards, data.currentCard);
+            this.setState({cards, isTurn: data.isTurn, players: data.players, currentCard: data.currentCard, selectedIndex: null});
+        });
+
+        Socket.on('message', (data) => {
+            var messages = this.state.messages.slice();
+            messages.push(data);
+            this.setState({messages});
         });
 
         Socket.emit('getGameState');
@@ -34,6 +39,7 @@ export default class Game extends Component {
 
     componentWillUnmount() {
         Socket.off('gameState');
+        Socket.off('message');
     }
 
     handleMessageChange(event) {
@@ -78,19 +84,62 @@ export default class Game extends Component {
         var cardDivs = [];
 
         for (let i = 0; i < this.state.cards.length; i++) {
-            if (this.state.cards[i].isSelected) cardDivs.push(<div key={'scrd' + i} className='selected-card-div'>{cardLookupTable[this.state.cards[i].suit][this.state.cards[i].value]}</div>);
-            else cardDivs.push(<div key={'crd' + i} className='card-div' onClick={() => this.clickCard(i)}>{cardLookupTable[this.state.cards[i].suit][this.state.cards[i].value]}</div>);
+            var cardDiv;
+            if (this.state.cards[i].isSelected) cardDiv = <div key={'scrd' + i} className='selected-card-div'>{cardLookupTable[this.state.cards[i].suit][this.state.cards[i].value]}</div>;
+            else cardDiv = <div key={'crd' + i} className='card-div' onClick={() => this.clickCard(i)}>{cardLookupTable[this.state.cards[i].suit][this.state.cards[i].value]}</div>;
+            var greyDiv = <div></div>;
+            if (!this.state.cards[i].playable) greyDiv = <div className='greyed-card'></div>;
+
+            cardDivs.push(<div key={'ck' + i}>{cardDiv}{greyDiv}</div>);
         }
 
         return cardDivs;
     }
 
-    sendMessage() {
-         var messages = this.state.messages.slice();
-         messages.push({isServerMessage: false, message: '[Rens] ' + this.state.sendMessage});
+    getFilteredCards(cards, currentCard) {
+        var filteredCards = [];
+        var notPlayableCounter = 0;
+        for(let i = 0; i < cards.length; i++) {
+            var playable = this.isCardPlayable(cards[i], currentCard);
+            filteredCards.push({suit: cards[i].suit, value: cards[i].value, playable})
+            if (!playable) notPlayableCounter++;
+        }
+        if (notPlayableCounter === cards.length) this.setState({pickCard: true});
+        else this.setState({pickCard: false});
+        return this.sortCards(filteredCards);
+    }
 
-         var messageBody = document.querySelector('.messages');
-         this.setState({messages}, () => (messageBody.scrollTop = messageBody.scrollHeight - messageBody.clientHeight));
+    isCardPlayable(card, currentCard) {
+        if (currentCard.suit === suitEnum.JOKER) return true;
+        if (card.suit === suitEnum.JOKER) return true;
+        if (card.suit === currentCard.suit) return true;
+        if (card.value === currentCard.value) return true;
+        return false;
+    }
+
+    sortCards(cards) {
+        cards.sort((a, b) => a.value - b.value);
+		cards.sort((a, b) => a.suit - b.suit);
+		cards.sort((a, b) => b.playable - a.playable);
+
+		return cards;
+	}
+
+    sendMessage() {
+         Socket.emit("message", {message: this.state.sendMessage});
+         console.log("yes");
+    }
+
+    playCard() {
+        if (this.state.selectedIndex === null) return;
+        var card = {suit: this.state.cards[this.state.selectedIndex].suit, value: this.state.cards[this.state.selectedIndex].value};
+        if (card.suit === null || card.value === null) return;
+
+        Socket.emit('playCard', card);
+    }
+
+    pickCard() {
+        Socket.emit('pickCard');
     }
 
     clickCard(i) {
@@ -118,7 +167,9 @@ export default class Game extends Component {
                 </div>
                 <div className='turn-order'><div className='order-title'>Turn order</div><div className='order-players'>{this.renderTurnOrder()}</div></div>
                 <div className='card-select-box'>
-                    {this.state.isTurn ? <div className='your-turn-div'><div className='turn-text'>Its your turn, select and play a card!</div><button className='play-card'>Play card</button></div> : <div className='cards-title'>Your cards:</div>}
+                    {this.state.isTurn && this.state.pickCard ? <div className='your-turn-div'><div className='turn-text'>Its your turn, but you can't play any card, so pick a card!</div><button className='play-card' onClick={this.pickCard}>Pick card</button></div> : <div></div>}
+                    {this.state.isTurn && !this.state.pickCard ? <div className='your-turn-div'><div className='turn-text'>Its your turn, select and play a card!</div><button className='play-card' onClick={this.playCard}>Play card</button></div> : <div></div>}
+                    {!this.state.isTurn ? <div className='cards-title'>Your cards:</div> : <div></div>}
                     <div className='cards-amount'>Card amount: {this.state.cards.length}</div>
                     <div className='all-cards'>{this.renderCards()}</div>
                 </div>
