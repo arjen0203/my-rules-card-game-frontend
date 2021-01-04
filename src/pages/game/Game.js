@@ -127,8 +127,9 @@ export default class Game extends Component {
 	}
 
     sendMessage() {
-         Socket.emit("message", {message: this.state.sendMessage});
-         console.log("yes");
+        if (this.state.sendMessage = '') return;
+        Socket.emit("message", {message: this.state.sendMessage});
+        this.setState({sendMessage: ''});
     }
 
     playCard() {
