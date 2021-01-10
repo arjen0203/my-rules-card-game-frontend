@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import './Login.scss';
+import autobind from 'class-autobind';
 
 class Login extends Component {
     constructor(props) {
@@ -10,9 +11,7 @@ class Login extends Component {
             password: "",
         }
 
-        this.handleNameChange = this.handleNameChange.bind(this);
-        this.handlePasswordChange = this.handlePasswordChange.bind(this);
-        this.toRegiter = this.toRegiter.bind(this);
+        autobind(this);
     }
 
     handleNameChange(event){
@@ -30,8 +29,22 @@ class Login extends Component {
         }
 
         var credentials = { username:this.state.username, password:this.state.password };
-        
-        console.log(credentials);
+        fetch('http://localhost:8080/api/login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(credentials)
+        })
+            .then((res) => {
+                if(res.ok){
+                    const token = res.headers.get("Authorization").replace("Bearer ","");
+                    console.log(token);
+
+                    this.props.history.push('/');
+                }
+                else{
+                    this.setState({loginError: "Could not login, credientials are incorrect" });
+                }
+            }).catch(() => this.setState({loginError: "Could not communicate with server"}));
     }
 
     toRegiter(){
@@ -50,7 +63,7 @@ class Login extends Component {
                     <label htmlFor="password">Password:</label>
                     <input id="password" className="login-username-input" type="password" placeholder="Password" value={this.state.password} onChange={this.handlePasswordChange}></input>
 
-                    <button className="login-submit-button" onClick={() => this.login()}>Login</button>
+                    <button className="login-submit-button" onClick={this.login}>Login</button>
                     <b className="login-error">{this.state.loginError}</b>
 
                     <div className="to-register-link" onClick={this.toRegiter}>Don't have an account yet? Register here.</div>

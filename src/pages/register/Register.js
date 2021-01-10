@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import './Register.scss';
+import autobind from 'class-autobind';
 
 class Register extends Component {
     constructor(props) {
@@ -11,21 +12,28 @@ class Register extends Component {
             passwordRepeat: ""
         }
 
-        this.handleNameChange = this.handleNameChange.bind(this);
-        this.handlePasswordChange = this.handlePasswordChange.bind(this);
-        this.handlePasswordRepChange = this.handlePasswordRepChange.bind(this);
-        this.tryRegistrating = this.tryRegistrating.bind(this);
-        this.goToLogin = this.goToLogin.bind(this);
+        autobind(this);
     }
 
     tryRegistrating(){
         if (!this.legalInput()) return;
 
         let user = { username: this.state.username, password: this.state.password };
-
-        console.log(user);
-
-        this.setState({loginError: "Could not communicate with server"});
+        fetch(`http://localhost:8080/api/user/add`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(user)
+        })
+            .then( async (res) => {
+                if(res.ok){
+                    this.setState({username: "", password: "", passwordRepeat: ""});
+                    this.props.history.push('/');
+                }
+                else {
+                    const text = await res.text();
+                    this.setState({registerError: text });
+                }
+            }).catch(() => this.setState({loginError: "Could not communicate with server"}));
     }
 
     legalInput(){

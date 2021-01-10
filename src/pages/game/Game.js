@@ -128,7 +128,7 @@ export default class Game extends Component {
 
     sendMessage() {
         var message = this.state.sendMessage;
-        if (this.state.sendMessage = '') return;
+        if (this.state.sendMessage === '') return;
         Socket.emit("message", {message: message});
         this.setState({sendMessage: ''});
     }
