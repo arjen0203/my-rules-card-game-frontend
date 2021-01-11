@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import './UserGames.scss'
 import Socket from './../../Sockets.js';
 import autobind from 'class-autobind';
+import {UserContext} from "../../UserContext";
 
 export default class Usergames extends Component {
     constructor(props) {
@@ -18,7 +19,7 @@ export default class Usergames extends Component {
     }
 
     componentDidMount() {
-        var games = [{id: 2, name: 'CardGame 1'}, {id: 5, name: 'CardGame 2'}, {id: 9, name: 'CardGame 3'}]
+        var games = [{id: 16, name: 'CardGame 1'}, {id: 5, name: 'CardGame 2'}, {id: 9, name: 'CardGame 3'}]
 
         this.setState({games});
 
@@ -77,7 +78,7 @@ export default class Usergames extends Component {
             return;
         }
 
-        Socket.emit('hostGame', {gameId: 69, hostName: this.state.screenName})
+        Socket.emit('hostGame', {gameId: this.state.hostGameId, hostName: this.state.screenName})
     }
 
     closeWindow(event) {
@@ -99,6 +100,9 @@ export default class Usergames extends Component {
                 </div> : 
                 <div></div>
                 }
+                <UserContext.Consumer>
+                    {({user, logoutUser, loginUser}) => {if (user.userId === 0) this.props.history.push('/')}}
+                </UserContext.Consumer>
             </div>
         )
     }

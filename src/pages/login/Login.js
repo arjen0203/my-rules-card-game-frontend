@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import './Login.scss';
-import autobind from 'class-autobind';
+import {UserContext} from "../../UserContext";
 
 class Login extends Component {
     constructor(props) {
@@ -11,7 +11,9 @@ class Login extends Component {
             password: "",
         }
 
-        autobind(this);
+        this.handleNameChange = this.handleNameChange.bind(this);
+        this.handlePasswordChange = this.handlePasswordChange.bind(this);
+        this.toRegiter = this.toRegiter.bind(this);
     }
 
     handleNameChange(event){
@@ -22,7 +24,7 @@ class Login extends Component {
         this.setState({password: event.target.value});
     }
 
-    login() {
+    login(setUserContext) {
         if (this.state.username === "" || this.state.password === "") {
             this.setState({loginError: "Please fill in all fields"})
             return;
@@ -37,11 +39,9 @@ class Login extends Component {
             .then((res) => {
                 if(res.ok){
                     const token = res.headers.get("Authorization").replace("Bearer ","");
-                    console.log(token);
-
+                    setUserContext(token);
                     this.props.history.push('/');
-                }
-                else{
+                } else {
                     this.setState({loginError: "Could not login, credientials are incorrect" });
                 }
             }).catch(() => this.setState({loginError: "Could not communicate with server"}));
@@ -53,22 +53,33 @@ class Login extends Component {
 
     render() {
         return (
-            <div className="center">
-                <div className="login-fields">
-                    <b className="login-title">Login</b>
+        <UserContext.Consumer>
+            {({user, logoutUser, loginUser}) => {
+                if (user.userId !== 0) {
+                    this.props.history.push('/')
+                } else {
+                    return (
+                        <div className="center">
+                            <div className="login-fields">
+                                <b className="login-title">Login</b>
 
-                    <label htmlFor="username">Username:</label>
-                    <input id="username" className="login-username-input" type="text" placeholder="Username" value={this.state.username} onChange={this.handleNameChange}></input>
+                                <label htmlFor="username">Username:</label>
+                                <input id="username" className="login-username-input" type="text" placeholder="Username" value={this.state.username} onChange={this.handleNameChange}></input>
 
-                    <label htmlFor="password">Password:</label>
-                    <input id="password" className="login-username-input" type="password" placeholder="Password" value={this.state.password} onChange={this.handlePasswordChange}></input>
+                                <label htmlFor="password">Password:</label>
+                                <input id="password" className="login-username-input" type="password" placeholder="Password" value={this.state.password} onChange={this.handlePasswordChange}></input>
 
-                    <button className="login-submit-button" onClick={this.login}>Login</button>
-                    <b className="login-error">{this.state.loginError}</b>
+                                <button className="login-submit-button" onClick={() => this.login(loginUser)}>Login</button>
+                                <b className="login-error">{this.state.loginError}</b>
 
-                    <div className="to-register-link" onClick={this.toRegiter}>Don't have an account yet? Register here.</div>
-                </div>
-            </div>
+                                <div className="to-register-link" onClick={this.toRegiter}>Don't have an account yet? Register here.</div>
+                            </div>
+                        </div>
+                            )
+                        }
+                    }
+                }
+            </UserContext.Consumer>
         );
     }
 }

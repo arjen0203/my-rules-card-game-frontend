@@ -9,8 +9,18 @@ import JoinGame from './pages/joinGame/JoinGame';
 import Lobby from './pages/lobby/Lobby';
 import Game from './pages/game/Game';
 import { UserContext } from './UserContext';
+import autobind from 'class-autobind';
 
 class App extends React.Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            user: {userId: 0, username: "Guest", getToken: function () {return null;}}
+        }
+
+        autobind(this);
+    }
 
     async componentDidMount() {
         let user = await this.getUserContext();
@@ -25,21 +35,21 @@ class App extends React.Component {
 
         if (tokenDate === null | localStorage.getItem("token") === null) {
             return GuestUser;
-    }
+        }
 
-    console.log(today);
+        console.log(today.getDay());
 
-    if (today.getDate() - tokenDate.getDate > 7) {
-        localStorage.removeItem("tokenTimestamp");
-        localStorage.removeItem("token");
+        if (today.getDate() - tokenDate.getDate > 7) {
+            localStorage.removeItem("tokenTimestamp");
+            localStorage.removeItem("token");
+            return GuestUser;
+        } else {
+            let user;
+            user = await this.getUserInfo();
+            if (user !== null) return user;
+        }
+
         return GuestUser;
-    } else {
-        localStorage.setItem('tokenTimestamp', today);
-        let user;
-        user = await this.getUserInfo();
-        if (user !== null) return user;
-    }
-    return GuestUser;
     }
 
     async getUserInfo() {
@@ -88,9 +98,9 @@ class App extends React.Component {
                     <nav>
                         <ul className="router-list">
                             <li><Link to={'/home'}>Home</Link></li>
-                            <li><Link to={'/userGames'}>Games</Link></li>
+                             {this.state.user.userId !== 0 ? (<li><Link to={'/userGames'}>Games</Link></li>) : <div></div>}
                             <li><Link to={'/joinGame'}>Find game</Link></li>
-                            <li className="login-button"><Link to={'/login'}>Login</Link></li>
+                            {this.state.user.userId !== 0 ? (<li className="login-button"><div className="logout-button" onClick={this.logoutUser}>Logout</div></li>) : <li className="login-button"><Link to={'/login'}>Login</Link></li>}
                         </ul>
                     </nav>
                     <Switch>

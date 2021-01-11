@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import './Register.scss';
 import autobind from 'class-autobind';
+import {UserContext} from "../../UserContext";
 
 class Register extends Component {
     constructor(props) {
@@ -101,6 +102,9 @@ class Register extends Component {
 
                     <div onClick={this.goToLogin} className="to-login-link">Already have an account? Login here.</div>
                 </div>
+                <UserContext.Consumer>
+                    {({user, logoutUser, loginUser}) => {if (user.userId !== 0) this.props.history.push('/')}}
+                </UserContext.Consumer>
             </div>
         );
     }
