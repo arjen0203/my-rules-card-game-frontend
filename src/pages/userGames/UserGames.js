@@ -19,11 +19,28 @@ export default class Usergames extends Component {
     }
 
     componentDidMount() {
-        var games = [{id: 16, name: 'CardGame 1'}, {id: 5, name: 'CardGame 2'}, {id: 9, name: 'CardGame 3'}]
+        //var games = [{id: 16, name: 'CardGame 1'}, {id: 5, name: 'CardGame 2'}, {id: 9, name: 'CardGame 3'}]
 
-        this.setState({games});
 
-        Socket.on('hostSucces', () => {
+        const URL = 'http://localhost:8080/api/rulesets/getAll';
+        fetch(URL, {
+            method: 'GET',
+            headers: { 'Authorization': 'Bearer ' + localStorage.getItem("token")}
+        }
+        ).then( async res => {
+                if (res.ok) {
+                    res.json().then(data => {
+                        this.setState({games: data})
+                    })
+                } else {
+                    const error = await res.text();
+                    console.log(error);
+                }
+            }).catch(() => console.log("Could not communicate with server"));
+
+        //this.setState({games});
+
+        Socket.on('hostSuccess', () => {
             this.props.history.push('/lobby');
         });
     }

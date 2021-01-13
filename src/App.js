@@ -28,33 +28,24 @@ class App extends React.Component {
     }
 
     async getUserContext() {
-        const tokenDate = new Date(localStorage.getItem("tokenTimestamp"));
-        const today = new Date();
-
         const GuestUser = {userId: 0, username: "Guest", getToken: function () {return null;}};
 
-        if (tokenDate === null | localStorage.getItem("token") === null) {
+        if (localStorage.getItem("token") === null) {
             return GuestUser;
         }
 
-        console.log(today.getDay());
+        let user;
+        user = await this.getUserInfo();
+        if (user !== null && user !== undefined) return user;
+        
 
-        if (today.getDate() - tokenDate.getDate > 7) {
-            localStorage.removeItem("tokenTimestamp");
-            localStorage.removeItem("token");
-            return GuestUser;
-        } else {
-            let user;
-            user = await this.getUserInfo();
-            if (user !== null) return user;
-        }
-
+        localStorage.removeItem("token");
         return GuestUser;
     }
 
     async getUserInfo() {
         let user;
-        await fetch('https://nonograms.nl/api/user/profile', {
+        await fetch('http://localhost:8080/api/user/profile', {
             method: 'GET',
             headers: {'Content-Type': 'application/json', 'Authorization': 'Bearer ' + localStorage.getItem("token")}
         })
@@ -72,15 +63,12 @@ class App extends React.Component {
     }
 
     async loginUser(token) {
-        const today = new Date();
         await localStorage.setItem("token", token);
-        await localStorage.setItem("tokenTimestamp", today.toString());
         await this.setState({user: this.getUserInfo()});
     }
 
     async logoutUser() {
         await localStorage.removeItem("token");
-        await localStorage.removeItem("tokenTimestamp")
         let user = await this.getUserContext();
         this.setState( {user});
     }
