@@ -5,6 +5,37 @@
     flex-direction: column;
     align-items: center;
 
+    .ruleset-info {
+        background-color: $jetLightest;
+        padding: 10px 20px 20px 20px;
+        border-radius: 10px;
+        margin-top: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        .ruleset-name {
+            color: $quicksilverLight;
+            font-size: 22px;
+        }
+
+        .ruleset-name-input {
+            margin-left: 10px;
+            margin-right: 10px;
+            color: $jet;
+            font-size: 20px;
+        }
+
+        .save-error {
+            color: $vermilionDark;
+            font-size: 20px;
+            font-weight: bold;
+            margin-top: 10px;
+            text-align: center;
+            margin-bottom: -5px;
+        }
+    }
+
     .win-rule {
         background-color: $jetLightest;
         border-radius: 10px;
@@ -12,10 +43,10 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        margin-top: 20px;
+        margin-top: 15px;
 
         .win-title {
-            font-size: 22px;
+            font-size: 20px;
             font-weight: bold;
             color: $quicksilverLight;
         }
@@ -31,7 +62,10 @@
         background-color: $quicksilverLight;
         padding: 10px 20px 10px 20px;
         border-radius: 10px;
-
+        overflow-x: hidden;
+        overflow-y: auto;
+        max-height: 560px;
+    
         .card-rules-title {
             font-size: 22px;
             font-weight: bold;
@@ -142,12 +176,13 @@
                 justify-content: center;
                 overflow-x: hidden;
                 overflow-y: auto;
-                max-height: 250px;
+                max-height: 300px;
                 cursor: pointer;
                 
                 .picked-card {
-                    height: 100px;
+                    height: 150px;
                     width: 100px;
+                    margin: 0px 5px 0px 5px;
                 }
             }
 
@@ -166,13 +201,42 @@
                 justify-content: center;
                 overflow-x: hidden;
                 overflow-y: auto;
-                max-height: 250px;
+                max-height: 300px;
                 cursor: pointer;
                 
                 .unpicked-card {
-                    height: 100px;
+                    height: 150px;
                     width: 100px;
+                    margin: 0px 5px 0px 5px;
                 }
+            }
+        }
+    }
+    .save-div {
+        background-color: $jetLightest;
+        border-radius: 20px;
+        padding: 10px;
+        margin-top: 20px;
+        .save-button {
+            display: inline-block;
+            padding: 10px;
+            background-color: $quicksilverLight;
+            color: $jetDark;
+            cursor: pointer;
+            text-decoration: none;
+            border: none;
+            transition: 0.4s;
+            border-radius: 8px;
+            width: 100px;
+            font-size: 30px;
+
+            &:hover {
+                background-color: $quicksilver;
+            }
+
+            &:active {
+                position:relative;
+                top:1px;
             }
         }
     }

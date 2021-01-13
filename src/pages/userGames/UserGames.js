@@ -95,6 +95,7 @@ export default class Usergames extends Component {
             return;
         }
 
+        console.log(this.state.hostGameId);
         Socket.emit('hostGame', {gameId: this.state.hostGameId, hostName: this.state.screenName})
     }
 
