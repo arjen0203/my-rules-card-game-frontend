@@ -24,7 +24,6 @@ export default class Game extends Component {
 
     componentDidMount() {
         Socket.on('gameState', (data) => {
-            console.log(data);
             var cards = this.getFilteredCards(data.cards, data.currentCard);
             this.setState({cards, isTurn: data.isTurn, players: data.players, currentCard: data.currentCard, selectedIndex: null});
         });

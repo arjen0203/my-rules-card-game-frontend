@@ -1,0 +1,178 @@
+@import './../../colors';
+
+.creating-main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .win-rule {
+        background-color: $jetLightest;
+        border-radius: 10px;
+        padding: 15px 25px 15px 25px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-top: 20px;
+
+        .win-title {
+            font-size: 22px;
+            font-weight: bold;
+            color: $quicksilverLight;
+        }
+
+        .win-desc {
+            font-size: 20px;
+            color: $quicksilverLight;
+        }
+    }
+
+    .card-rules {
+        margin-top: 20px;
+        background-color: $quicksilverLight;
+        padding: 10px 20px 10px 20px;
+        border-radius: 10px;
+
+        .card-rules-title {
+            font-size: 22px;
+            font-weight: bold;
+            color: $jetDark;
+            text-align: center;
+        }
+
+        .card-rules-desc {
+            font-size: 18px;
+            font-style: italic;
+            color: $jetDark;
+            text-align: center;
+            word-break: break-word;
+        }
+
+        .rule {
+            background-color: $jetLightest;
+            border-radius: 10px;
+            padding: 15px 25px 15px 25px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 20px;
+
+            .rule-info {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                .rule-title {
+                    font-size: 22px;
+                    font-weight: bold;
+                    color: $quicksilverLight;
+                }
+
+                .rule-desc {
+                    font-size: 20px;
+                    color: $quicksilverLight;
+                }
+            }
+
+            .rule-cards {
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                .cards-select {
+                    font-size: 20px;
+                    color: $quicksilverLight;
+                }
+                .cards-edit {
+                    display: inline-block;
+                    padding: 5px;
+                    background-color: $quicksilver;
+                    color: $jetDark;
+                    cursor: pointer;
+                    text-decoration: none;
+                    border: none;
+                    transition: 0.4s;
+                    border-radius: 5px;
+                    font-size: 20px;
+                    border: 2px solid $quicksilverLight;
+                    margin-left: 10px;
+                    margin-top: 5px;
+        
+                    &:hover {
+                        background-color: $quicksilverLight;
+                    }
+                    &:active {
+                        position:relative;
+                        top:1px;
+                    }
+                }
+            }
+        }
+    }
+
+    .click-lock-div {
+        height: 100vh;
+        width: 100vw;
+        position: fixed;
+        top: 0px;
+        background-color: rgba(0, 0, 0, 0.39);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+
+        .card-picker {
+            background-color: $jet;
+            border-radius: 20px;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            max-width: 80vw;
+            border: 5px solid $jetDark;
+
+            .selected-cards-title {
+                font-size: 20px;
+                font-weight: bold;
+                color: $quicksilverLight;
+            }
+
+            .selected-cards {
+                margin-top: 10px;
+                display: flex;
+                width: 100%;
+                flex-wrap: wrap;
+                justify-content: center;
+                overflow-x: hidden;
+                overflow-y: auto;
+                max-height: 250px;
+                cursor: pointer;
+                
+                .picked-card {
+                    width: 100px;
+                }
+            }
+
+            .not-selected-cards-title {
+                font-size: 20px;
+                font-weight: bold;
+                color: $quicksilverLight;
+                margin-top: 10px;
+            }
+
+            .unselected-cards {
+                margin-top: 10px;
+                display: flex;
+                width: 100%;
+                flex-wrap: wrap;
+                justify-content: center;
+                overflow-x: hidden;
+                overflow-y: auto;
+                max-height: 250px;
+                cursor: pointer;
+                
+                .unpicked-card {
+                    width: 100px;
+                    height: 100%;
+                }
+            }
+        }
+    }
+}

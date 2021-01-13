@@ -10,6 +10,7 @@ import Lobby from './pages/lobby/Lobby';
 import Game from './pages/game/Game';
 import { UserContext } from './UserContext';
 import autobind from 'class-autobind';
+import Creating from './pages/creating/Creating';
 
 class App extends React.Component {
     constructor(props) {
@@ -96,7 +97,7 @@ class App extends React.Component {
                         <Route exact path='/register' component={Register}/>
 
                         <Route exact path='/userGames' component={UserGames}/>
-                        <Route exact path='/userGames/create' component={Home}/>
+                        <Route exact path='/userGames/create' component={Creating}/>
 
                         <Route exact path='/joinGame' component={JoinGame}/>
                         <Route exact path='/lobby' component={Lobby}/>
