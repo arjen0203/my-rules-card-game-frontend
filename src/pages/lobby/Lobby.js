@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import Socket from '../../Sockets';
 import './Lobby.scss';
 import autobind from 'class-autobind';
+import { REACTURL } from '../../Constants';
 
 export default class Lobby extends Component {
     constructor(props) {
@@ -45,8 +46,7 @@ export default class Lobby extends Component {
     }
 
     quickLInkToClipboard() {
-        //navigator.clipboard.writeText('https://kom-potje.xyz/joinGame?code=' + this.state.code);
-        navigator.clipboard.writeText('http://localhost:3000/joinGame?code=' + this.state.code);
+        navigator.clipboard.writeText(REACTURL + '/joinGame?code=' + this.state.code);
     }
 
     kickPlayer(id) {
