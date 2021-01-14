@@ -1,4 +1,5 @@
 import io from 'socket.io-client';
+import { SOCKETSURL } from './Constants';
 
 class Socket {
 	constructor() {
@@ -6,7 +7,7 @@ class Socket {
 	}
 
 	init() {
-		this.socket = io('http://localhost:5002', { path:'/sockets' });
+		this.socket = io(SOCKETSURL, { path:'/sockets' });
 		
 		this.socket.on('error', (data) => console.log(data))
 	}

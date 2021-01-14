@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import './Register.scss';
 import autobind from 'class-autobind';
 import {UserContext} from "../../UserContext";
+import { RESTURL } from '../../Constants';
 
 class Register extends Component {
     constructor(props) {
@@ -20,7 +21,7 @@ class Register extends Component {
         if (!this.legalInput()) return;
 
         let user = { username: this.state.username, password: this.state.password };
-        fetch(`http://localhost:8080/api/user/add`, {
+        fetch(RESTURL + `/user/add`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(user)

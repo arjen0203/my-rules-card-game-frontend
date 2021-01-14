@@ -3,6 +3,7 @@ import { ruleLookupTable } from './RuleInfo.js';
 import './Creating.scss';
 import autobind from 'class-autobind';
 import { cardLookupTable, cardValueTable } from './../../cards/CardLookupTable.js';
+import { RESTURL } from '../../Constants';
 
 export default class Creating extends Component {
     constructor(props) {
@@ -107,7 +108,7 @@ export default class Creating extends Component {
         }
         let ruleset = { name: this.state.name, cardRules: trueCardRules };
 
-        fetch(`http://localhost:8080/api/rulesets/add`, {
+        fetch(RESTURL + '/rulesets/add', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' , 'Authorization': 'Bearer ' + localStorage.getItem("token")},
             body: JSON.stringify(ruleset)

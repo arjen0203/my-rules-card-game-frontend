@@ -11,6 +11,7 @@ import Game from './pages/game/Game';
 import { UserContext } from './UserContext';
 import autobind from 'class-autobind';
 import Creating from './pages/creating/Creating';
+import { RESTURL } from './Constants';
 
 class App extends React.Component {
     constructor(props) {
@@ -46,7 +47,7 @@ class App extends React.Component {
 
     async getUserInfo() {
         let user;
-        await fetch('http://localhost:8080/api/user/profile', {
+        await fetch(RESTURL + '/user/profile', {
             method: 'GET',
             headers: {'Content-Type': 'application/json', 'Authorization': 'Bearer ' + localStorage.getItem("token")}
         })

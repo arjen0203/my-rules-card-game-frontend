@@ -3,6 +3,7 @@ import './UserGames.scss'
 import Socket from './../../Sockets.js';
 import autobind from 'class-autobind';
 import {UserContext} from "../../UserContext";
+import { RESTURL } from '../../Constants';
 
 export default class Usergames extends Component {
     constructor(props) {
@@ -22,7 +23,7 @@ export default class Usergames extends Component {
         //var games = [{id: 16, name: 'CardGame 1'}, {id: 5, name: 'CardGame 2'}, {id: 9, name: 'CardGame 3'}]
 
 
-        const URL = 'http://localhost:8080/api/rulesets/getAll';
+        const URL = RESTURL + '/rulesets/getAll';
         fetch(URL, {
             method: 'GET',
             headers: { 'Authorization': 'Bearer ' + localStorage.getItem("token")}

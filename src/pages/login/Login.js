@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import './Login.scss';
 import {UserContext} from "../../UserContext";
+import { RESTURL } from '../../Constants';
 
 class Login extends Component {
     constructor(props) {
@@ -31,7 +32,7 @@ class Login extends Component {
         }
 
         var credentials = { username:this.state.username, password:this.state.password };
-        fetch('http://localhost:8080/api/login', {
+        fetch(RESTURL + '/login', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(credentials)
