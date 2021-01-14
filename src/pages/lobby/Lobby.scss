@@ -1,0 +1,148 @@
+@import './../../colors';
+
+.center {
+    justify-content: center;
+    display: flex;
+    
+    .lobby-info-box {
+        display: flex;
+        flex-direction: column;
+        background-color: $jetLightest;
+        border-radius: 20px;
+        margin-top: 30px;
+        padding: 40px;
+        align-items: center;
+        
+        .lobby-title, .lobby-info-text, .lobby-code {
+            color: $quicksilverLight;
+        }
+
+        .lobby-title {
+            margin-top: 10px;
+            font-size: 50px;
+        }
+
+        .lobby-info-text {
+            font-size: 30px;
+            margin-top: 10px;
+            margin-bottom: 30px;
+        }
+
+        .lobby-code {
+            font-size: 50px;
+            font-weight: bold;
+            color: $vermilionDark;
+        }
+
+        .lobby-copy-link {
+            margin-top: 25px;
+            margin-bottom: 5px;
+            text-decoration: underline;
+            font-size: 20px;
+            color: $quicksilver;
+            cursor: pointer;
+        }
+    }
+
+    .lobby-players-box {
+        margin-top: 20px;
+        padding: 20px;
+        background-color: $jetLightest;
+        border-radius: 20px;
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: column;
+        text-align: center;
+        width: 800px;
+
+        .players-container {
+            display: flex;
+            justify-content: space-evenly;
+            flex-wrap: wrap;
+
+            .player-box, .player-box-host {
+                padding: 5px;
+                margin: 20px;
+                background-color: $quicksilver;
+                text-align: center;
+                border-radius: 5px;
+                font-size: 30px;
+                transition: 0.4s;
+                border: 5px solid $quicksilver;
+            }
+
+            .player-box-host {
+                cursor: pointer;
+            }
+
+            .player-box-host:hover {
+                border: 5px solid $vermilionDark;
+            }
+        }
+
+        .player-amount {
+            color: $quicksilverLight;
+            font-weight: bold;
+            font-size: 50px;
+        }
+
+        .kick-text {
+            margin-top: 10px;
+            color: $quicksilverLight;
+            font-style: italic;
+            font-size: 18px;
+        }
+
+        .start-button {
+            display: inline-block;
+            padding: 5px;
+            background-color: $quicksilverLight;
+            color: $jetDark;
+            font-weight: bold;
+            cursor: pointer;
+            text-decoration: none;
+            border: none;
+            transition: 0.4s;
+            border-radius: 5px;
+            width: 100px;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            font-size: 30px;
+            border: 4px solid $quicksilver;
+
+            &:hover {
+                background-color: $quicksilver;
+            }
+
+            &:active {
+                position:relative;
+                top:1px;
+            }
+        }
+
+        button {
+            display: inline-block;
+            padding: 5px;
+            background-color: $quicksilverLight;
+            color: $jetDark;
+            cursor: pointer;
+            text-decoration: none;
+            border: none;
+            transition: 0.4s;
+            border-radius: 5px;
+            width: 30%;
+            margin: auto;
+            margin-top: 20px;
+            font-size: 20px;
+
+            &:hover {
+                background-color: $quicksilver;
+            }
+
+            &:active {
+                position:relative;
+                top:1px;
+            }
+        }
+    }
+}

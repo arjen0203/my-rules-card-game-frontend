@@ -1,0 +1,77 @@
+@import './../../colors';
+
+.center {
+    justify-content: center;
+    display: flex;
+
+    .register-fields {
+        display: flex;
+        flex-direction: column;
+        background-color: $jetLightest;
+        padding: 20px;
+        border-radius: 20px;
+        margin-top: 60px;
+        width: 350px;
+
+        * {
+            color: $quicksilverLight;
+            font-size: 18px;
+        }
+
+        .register-title {
+            text-align: center;
+            color: $quicksilverLight;
+        }
+
+        .register-username-input {
+            margin-top: 3px;
+            margin-bottom: 10px;
+            color: $jet;
+            padding-left: 3px;
+        }
+
+        .register-password-input {
+            margin-top: 3px;
+            margin-bottom: 10px;
+            color: $jet;
+            padding-left: 3px;
+        }
+
+        .register-error {
+            color: $vermilionDark;
+            font-size: 20px;
+            text-align: center;
+            margin-top: 8px;
+            margin-bottom: -8px;
+        }
+
+        .register-submit-button {
+            display: inline-block;
+            margin-top: 5px;
+            padding: 5px;
+            background-color: $quicksilver;
+            color: $jetDark;
+            cursor: pointer;
+            text-decoration: none;
+            border: none;
+            transition: 0.4s;
+            width: 200px;
+            margin-left: 75px;
+            border-radius: 5px;
+
+            &:hover {
+                background-color: $quicksilverLight;
+            }
+            &:active {
+                position:relative;
+                top:1px;
+            }
+        }
+        .to-login-link {
+            text-align: center;
+            margin-top: 10px;
+            cursor: pointer;
+            text-decoration: underline;
+        }
+    }
+}
