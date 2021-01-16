@@ -108,7 +108,7 @@ export default class Creating extends Component {
         }
         let ruleset = { name: this.state.name, cardRules: trueCardRules };
 
-        fetch(RESTURL + '/rulesets/add', {
+        fetch(RESTURL + '/rulesets', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' , 'Authorization': 'Bearer ' + localStorage.getItem("token")},
             body: JSON.stringify(ruleset)
