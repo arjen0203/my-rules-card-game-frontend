@@ -19,6 +19,7 @@ export default class Lobby extends Component {
 
     componentDidMount() {
         Socket.on('lobbyData', (data) => {
+            console.log(data);
             this.setState({players: data.players, code: data.code, isHost: data.isHost});
         });
 

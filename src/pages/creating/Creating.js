@@ -100,7 +100,7 @@ export default class Creating extends Component {
             if (this.state.cardRules[i].cards.length > 0) {
                 var newCards = [];
                 for (let j = 0; j < this.state.cardRules[i].cards.length; j++) {
-                    newCards.push({suitEnum: this.state.cardRules[i].cards[j].suit, suitValue: this.state.cardRules[i].cards[j].value});
+                    newCards.push({suitEnum: this.state.cardRules[i].cards[j].suit, valueEnum: this.state.cardRules[i].cards[j].value});
                 }
                 var newCardRule = {ruleEnum: this.state.cardRules[i].ruleEnum, cards: newCards};
                 trueCardRules.push(newCardRule);
