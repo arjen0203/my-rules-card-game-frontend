@@ -47,7 +47,7 @@ class App extends React.Component {
 
     async getUserInfo() {
         let user;
-        await fetch(RESTURL + '/user/profile', {
+        await fetch(RESTURL + '/user', {
             method: 'GET',
             headers: {'Content-Type': 'application/json', 'Authorization': 'Bearer ' + localStorage.getItem("token")}
         })
